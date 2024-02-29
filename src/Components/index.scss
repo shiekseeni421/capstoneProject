@@ -1,0 +1,12 @@
+.pageTitleEl {
+  display: flex;
+  align-items: center;
+  .Icon {
+    font-size: 25px;
+    margin-right: 5px;
+  }
+  .pageTitel {
+    font-size: 25px;
+    font-weight: 600;
+  }
+}

@@ -1,0 +1,28 @@
+.mt-10 {
+  margin-top: 10px;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.mt-30 {
+  margin-top: 30px;
+}
+
+.ViewMorePage {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+
+  .view-headder {
+    display: flex;
+    align-items: center;
+  }
+  .Icons {
+    color: #042893;
+    font-size: 25px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+}
