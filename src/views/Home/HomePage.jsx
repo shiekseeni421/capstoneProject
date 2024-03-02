@@ -2,7 +2,17 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import BookDummyImge from "../../assets/BookDummyImge.png";
 
-import { Button, Card, Col, Row, Divider, Spin, Pagination, Input } from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  Row,
+  Divider,
+  Spin,
+  Pagination,
+  Input,
+  Drawer,
+} from "antd";
 
 import PageTitle from "../../Components/PageTitle/PageTitle";
 import { getBookItem } from "../../Store/booksItem/bookActions";
@@ -14,6 +24,13 @@ import {
 } from "../../Store/booksItem/bookItemSlice";
 import PaginationComponet from "../../Components/Pagination";
 import { useNavigate } from "react-router-dom";
+import {
+  FilterOutlined,
+  SortAscendingOutlined,
+  SortDescendingOutlined,
+} from "@ant-design/icons";
+
+import "./index.scss";
 
 function HomePage() {
   const navigate = useNavigate();
@@ -25,24 +42,34 @@ function HomePage() {
   const pageParams = useSelector((state) => state.books.pageParams);
   let count = list.length != 0 && list.length;
   const { Search } = Input;
-  const [searchValue, setSearchValue] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const showDrawer = () => {
+    setOpen(true);
+  };
+  const onClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
-    if (searchValue == "") {
-      const url = "https://freetestapi.com/api/v1/books";
-      // const url = "https://api.itbook.store/1.0/new";
-      dispatch(getBookItem({ url }));
-    } else if (searchValue != "") {
-      list = list.filter((item) => {
-        if (item.title.toLowerCase().includes(searchValue)) {
-          return item;
-        }
-      });
-    }
+    const url = "https://freetestapi.com/api/v1/books";
+    // const url = "https://api.itbook.store/1.0/new";
+    dispatch(getBookItem({ url }));
   }, []);
 
+  const clickSort = () => {
+    const url = "https://freetestapi.com/api/v1/books?sort=name&order=dec";
+    dispatch(getBookItem({ url }));
+  };
+
+  const clickSortAce = () => {
+    const url = "https://freetestapi.com/api/v1/books";
+    dispatch(getBookItem({ url }));
+  };
+
   const onSearch = (value) => {
-    setSearchValue(value.toLowerCase());
+    let url = `https://freetestapi.com/api/v1/books?search=${value}`;
+    dispatch(getBookItem({ url }));
   };
 
   function showTotal(total) {
@@ -69,12 +96,25 @@ function HomePage() {
         }}
       >
         <h1>Books Store</h1>
-        <div>
-          <Search
-            placeholder="Enter a value"
-            onSearch={onSearch}
-            enterButton
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <FilterOutlined
+            style={{ color: "#1677ff", fontSize: "25px", marginRight: "10px" }}
+            onClick={showDrawer}
           />
+          <SortAscendingOutlined
+            style={{ color: "#1677ff", fontSize: "25px", marginRight: "10px" }}
+            onClick={clickSortAce}
+          />
+          <SortDescendingOutlined
+            style={{ color: "#1677ff", fontSize: "25px", marginRight: "10px" }}
+            onClick={clickSort}
+          />
+          <Drawer title="Filter" onClose={onClose} open={open} class="drawer">
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+          </Drawer>
+          <Search placeholder="Enter a value" onSearch={onSearch} enterButton />
         </div>
       </div>
 

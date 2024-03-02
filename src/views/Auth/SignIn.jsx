@@ -44,22 +44,9 @@ function SignIn() {
             ),
           });
         } else {
-          Modal.success({
-            icon: (
-              <span>
-                <RiCheckboxCircleLine className="Succes-Icon" />
-              </span>
-            ),
-            title: <h5 className="Error-Item">Sucess</h5>,
-            content: (
-              <div>
-                <p>Sucessfully Rigester Please Sign In</p>
-              </div>
-            ),
-          });
-
           localStorage.setItem("token", JSON.stringify(true));
           navigate("/");
+          window.location.reload();
         }
       } else {
         Modal.error({
@@ -92,9 +79,11 @@ function SignIn() {
       });
     }
   };
+
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
   return (
     <div class="login">
       <Card>

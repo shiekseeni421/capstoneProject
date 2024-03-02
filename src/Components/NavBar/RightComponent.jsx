@@ -13,6 +13,7 @@ function RightComponent() {
   const navigate = useNavigate();
 
   const confirm = (e) => {
+    localStorage.setItem("token", JSON.stringify(false));
     navigate("/signin");
   };
 
